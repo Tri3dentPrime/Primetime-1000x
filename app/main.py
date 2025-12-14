@@ -1,6 +1,7 @@
 from fastapi import FastAPI
-from app.tasks import create_task, Task
+from app.tasks import create_task
 from app.ledger import record_event
+from app.artifacts import write_artifact
 
 app = FastAPI(title="PrimeTime 1000x Core")
 
@@ -15,11 +16,22 @@ def health():
 @app.post("/tasks")
 def new_task(title: str, description: str):
     task = create_task(title=title, description=description)
+
     ledger_event = record_event(
         event_type="task_created",
         payload=task.dict()
     )
+
+    artifact = write_artifact(
+        task_id=task.id,
+        content={
+            "task": task.dict(),
+            "ledger": ledger_event
+        }
+    )
+
     return {
         "task": task,
-        "ledger": ledger_event
+        "ledger": ledger_event,
+        "artifact": artifact
     }
