@@ -26,6 +26,30 @@ Custody: SR1/SR2 logged
 - **Purpose:** Ensure sponsor‑grade clarity and accountability.  
 - **Visual:** Yellow lane, review badge, annotation overlay.
 
+---## Rejected — Denied / Hold
+
+- **Definition:** Action is denied during review and cannot be sealed.
+- **Rules:**
+  - No sealing permitted.
+  - Rejection reason MUST be logged (reason pointer).
+  - Task remains in custody until RECYCLE or permanent closure.
+- **Purpose:** Prevent unsafe or invalid actions from entering the vault.
+- **Visual:** Red badge + “REJECTED” stamp.
+
+---
+
+## Recycle — Re-entry Path
+
+- **Definition:** Controlled re-entry for rejected tasks without bypassing review.
+- **Allowed Transitions:**
+  - REJECTED → RECYCLE → REVIEW
+- **Requirements:**
+  - Rejection reason MUST be logged
+  - Original task ID is preserved
+  - Audit trail remains immutable
+- **Purpose:** Allow correction + re-review while keeping custody intact.
+- **Visual:** Yellow recycle-arrow badge.
+
 ---
 
 ## Green — Integration / Seal  
